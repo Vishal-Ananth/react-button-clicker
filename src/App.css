@@ -1,0 +1,59 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#display-region {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+button {
+  margin: 4px;
+}
+
+.button-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+
+}
+
+.result-container {
+  border: 2px solid black;
+  width: 500px;
+  height: auto;
+  margin: 7px;
+
+}
+
+
+.result-card {
+  margin: 10px;
+  /* border: 1px solid black; */
+  padding: 2px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.result {
+  border: 1px solid black;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.log-container {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.logs {
+  border: 1px solid black;
+  padding: 2px;
+  margin: 2px;
+}
