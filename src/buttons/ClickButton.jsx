@@ -1,20 +1,9 @@
 import { useId } from "react";
 
 export default function ClickButton(ActionButton) {
-  function WrappedButton({
-    count,
-    setCount,
-    setAction,
-    action,
-    setCurrentButton,
-    children,
-  }) {
+  function WrappedButton({}) {
     const buttonId = useId();
-    function handleClick() {
-      setCount(count + 1);
-      setAction(() => action);
-      setCurrentButton(buttonId);
-    }
+    function handleClick() {}
 
     return <ActionButton handleClick={handleClick}>{children}</ActionButton>;
   }
