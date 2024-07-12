@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import LogContainer from "./LogContainer";
 import useDebounce from "../util/useDebounce";
 
-export default function ResultCard({ result, logList, buttonId }) {
+export default function ResultCard({ logList }) {
   const forcedRender = useDebounce(10000, 0);
   return (
     <>

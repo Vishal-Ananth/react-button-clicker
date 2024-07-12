@@ -1,21 +1,15 @@
 import "./App.css";
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import DisplayCards from "./display/DisplayCards";
 import useDebounce from "./util/useDebounce";
-
 import FunctionButton from "./buttons/FunctionButton";
 
 export default function App() {
   const [count, setCount] = useState(0);
   const delayedCount = useDebounce(count, 3000);
-
   const [action, setAction] = useState(() => () => {});
-  const [prevAction, setPrevAction] = useState(() => () => {});
-
   const [currentButton, setCurrentButton] = useState(null);
   const [prevButton, setPrevButton] = useState(null);
-  const [immediateResult, setImmediateResult] = useState(0);
 
   return (
     <>

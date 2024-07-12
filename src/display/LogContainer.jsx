@@ -1,4 +1,3 @@
-import { useEffect, useId, useRef, useState } from "react";
 import Logs from "./Logs";
 
 export default function LogContainer({ logList }) {

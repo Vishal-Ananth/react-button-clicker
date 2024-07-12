@@ -6,7 +6,6 @@ function FunctionButton({
   handleClick,
   setAction,
   action,
-  setCurrentButton,
   children,
 }) {
   return (
