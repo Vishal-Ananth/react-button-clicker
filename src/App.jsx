@@ -3,21 +3,17 @@ import "./App.css";
 import { useState, useEffect, createContext, useId, useRef } from "react";
 import FunctionButton from "./buttons/FunctionButton";
 import DisplayCards from "./display/DisplayCards";
+import FunctioButton from "./buttons/FunctionButton";
 
 export const DataContext = createContext();
 
 export default function App() {
-  // const [storeResult, setStoreResult] = useState([]);
-  const storeResult = useRef([]);
-
-  // useEffect(() => {
-  //   console.log(storeResult);
-  // }, [storeResult]);
+  const [storeResult, setStoreResult] = useState([]);
 
   return (
     <>
       <div className="button-container">
-        <DataContext.Provider value={storeResult}>
+        <DataContext.Provider value={setStoreResult}>
           <FunctionButton action={factorial}>Factorial</FunctionButton>
           <FunctionButton action={fibonacci}>Fibonacci</FunctionButton>
           <FunctionButton action={summation}>Summation</FunctionButton>
@@ -25,11 +21,13 @@ export default function App() {
           <FunctionButton action={randomGen}>Random</FunctionButton>
         </DataContext.Provider>
       </div>
-      <div>
-        <DataContext.Provider value={storeResult}>
-          <DisplayCards></DisplayCards>
-        </DataContext.Provider>
-      </div>
+      {storeResult.length === 0 ? null : (
+        <div className="display-region">
+          <DataContext.Provider value={storeResult}>
+            <DisplayCards></DisplayCards>
+          </DataContext.Provider>
+        </div>
+      )}
     </>
   );
 }

@@ -6,9 +6,9 @@ body {
 
 }
 
-#display-region {
+.display-region {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 button {
