@@ -17,18 +17,14 @@ export default function ClickButton(ActionButton) {
 
     useEffect(() => {
       if (resultObject.result !== null) {
-        // console.log(resultObject);
-        // setStoreResult((prevState) => [...prevState, resultObject]);
         storeResult.current = [...storeResult.current, resultObject];
-        setResultObject((prevState) => {
-          return {
-            buttonId: buttonId,
-            countList: [],
-            result: null,
-          };
+        setResultObject({
+          buttonId: buttonId,
+          countList: [],
+          result: null,
         });
-        console.log(storeResult.current);
-        // setCount(0);
+        // Remove bellow commit to see result of the main data repo
+        console.log(storeResult.current, "--->", storeResult.current.length);
       }
     }, [resultObject.result]);
 
