@@ -1,81 +1,29 @@
 import "./App.css";
-import { useState } from "react";
-import DisplayCards from "./display/DisplayCards";
-import useDebounce from "./util/useDebounce";
+
+import { useState, useEffect, createContext, useId } from "react";
 import FunctionButton from "./buttons/FunctionButton";
+import DisplayCards from "./display/DisplayCards";
+
+export const DataContext = createContext();
 
 export default function App() {
-  const [count, setCount] = useState(0);
-  const delayedCount = useDebounce(count, 3000);
-  const [action, setAction] = useState(() => () => {});
-  const [currentButton, setCurrentButton] = useState(null);
-  const [prevButton, setPrevButton] = useState(null);
+  const [storeResult, setStoreResult] = useState([]);
 
   return (
     <>
       <div className="button-container">
-        <FunctionButton
-          setAction={setAction}
-          count={count}
-          setCount={setCount}
-          action={factorial}
-          setCurrentButton={setCurrentButton}
-        >
-          Factorial
-        </FunctionButton>
-
-        <FunctionButton
-          setAction={setAction}
-          count={count}
-          setCount={setCount}
-          action={fibonacci}
-          setCurrentButton={setCurrentButton}
-        >
-          Fibonacci
-        </FunctionButton>
-
-        <FunctionButton
-          setAction={setAction}
-          count={count}
-          setCount={setCount}
-          action={summation}
-          setCurrentButton={setCurrentButton}
-        >
-          Summation
-        </FunctionButton>
-
-        <FunctionButton
-          setAction={setAction}
-          count={count}
-          setCount={setCount}
-          action={exponent}
-          setCurrentButton={setCurrentButton}
-        >
-          Exponent
-        </FunctionButton>
-
-        <FunctionButton
-          setAction={setAction}
-          count={count}
-          setCount={setCount}
-          action={randomGen}
-          setCurrentButton={setCurrentButton}
-        >
-          Random
-        </FunctionButton>
+        <DataContext.Provider value={setStoreResult}>
+          <FunctionButton action={factorial}>Factorial</FunctionButton>
+          <FunctionButton action={fibonacci}>Fibonacci</FunctionButton>
+          <FunctionButton action={summation}>Summation</FunctionButton>
+          <FunctionButton action={exponent}>Exponent</FunctionButton>
+          <FunctionButton action={randomGen}>Random</FunctionButton>
+        </DataContext.Provider>
       </div>
-
-      <div className="display-region">
-        <DisplayCards
-          value={delayedCount}
-          count={count}
-          action={action}
-          setCount={setCount}
-          setCurrentButton={setCurrentButton}
-          currentButton={currentButton}
-          setPrevButton={setPrevButton}
-          prevButton={prevButton}
-        ></DisplayCards>
+      <div>
+        <DataContext.Provider value={storeResult}>
+          <DisplayCards></DisplayCards>
+        </DataContext.Provider>
       </div>
     </>
   );
