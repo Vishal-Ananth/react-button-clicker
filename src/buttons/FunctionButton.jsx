@@ -1,8 +1,6 @@
 import ClickButton from "./ClickButton";
 
-
-function FunctionButton({ children, handleClick, action }) {
-
+function FunctionButton({ children, handleClick }) {
   return (
     <>
       <button onClick={handleClick}>{children}</button>

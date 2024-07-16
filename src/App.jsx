@@ -1,18 +1,23 @@
 import "./App.css";
 
-import { useState, useEffect, createContext, useId } from "react";
+import { useState, useEffect, createContext, useId, useRef } from "react";
 import FunctionButton from "./buttons/FunctionButton";
 import DisplayCards from "./display/DisplayCards";
 
 export const DataContext = createContext();
 
 export default function App() {
-  const [storeResult, setStoreResult] = useState([]);
+  // const [storeResult, setStoreResult] = useState([]);
+  const storeResult = useRef([]);
+
+  // useEffect(() => {
+  //   console.log(storeResult);
+  // }, [storeResult]);
 
   return (
     <>
       <div className="button-container">
-        <DataContext.Provider value={setStoreResult}>
+        <DataContext.Provider value={storeResult}>
           <FunctionButton action={factorial}>Factorial</FunctionButton>
           <FunctionButton action={fibonacci}>Fibonacci</FunctionButton>
           <FunctionButton action={summation}>Summation</FunctionButton>

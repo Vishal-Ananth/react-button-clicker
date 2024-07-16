@@ -1,28 +1,60 @@
-import { useId, useRef, useState, useEffect } from "react";
+import { useId, useRef, useState, useEffect, useContext } from "react";
 import useDebounce from "../util/useDebounce";
+
+import { DataContext } from "../App";
 
 export default function ClickButton(ActionButton) {
   function WrappedButton({ children, action }) {
+    const storeResult = useContext(DataContext);
     const buttonId = useId();
     const [count, setCount] = useState(0);
     const resultVal = useDebounce(count, 3000);
-    const resultObject = useRef({
+    const [resultObject, setResultObject] = useState({
       buttonId: buttonId,
       countList: [],
       result: null,
     });
 
     useEffect(() => {
-      resultObject.current.result = resultVal;
+      if (resultObject.result !== null) {
+        // console.log(resultObject);
+        // setStoreResult((prevState) => [...prevState, resultObject]);
+        storeResult.current = [...storeResult.current, resultObject];
+        setResultObject((prevState) => {
+          return {
+            buttonId: buttonId,
+            countList: [],
+            result: null,
+          };
+        });
+        console.log(storeResult.current);
+        // setCount(0);
+      }
+    }, [resultObject.result]);
+
+    useEffect(() => {
+      if (count !== 0) {
+        setResultObject((prevState) => {
+          return {
+            buttonId: prevState.buttonId,
+            countList: prevState.countList,
+            result: action(resultVal),
+          };
+        });
+
+        setCount(0);
+      }
     }, [resultVal]);
 
     useEffect(() => {
       if (count !== 0) {
-        resultObject.current.countList = [
-          ...resultObject.current.countList,
-          count,
-        ];
-        console.log(resultObject);
+        setResultObject((prevState) => {
+          return {
+            buttonId: prevState.buttonId,
+            countList: [...prevState.countList, count],
+            result: null,
+          };
+        });
       }
     }, [count]);
 
