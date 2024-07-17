@@ -4,10 +4,10 @@ import useDebounce from "../util/useDebounce";
 import { DataContext } from "../App";
 
 export default memo(function FunctionButton({ children, action }) {
-  const [setStoreResult, setCurrentObject] = useContext(DataContext);
+  const setStoreResult = useContext(DataContext);
   const buttonId = useId();
   const [count, setCount] = useState(0);
-  const resultVal = useDebounce(count, 1000);
+  const resultVal = useDebounce(count, 1000, action);
 
   const [resultObject, setResultObject] = useState({
     buttonId: buttonId,
@@ -16,24 +16,17 @@ export default memo(function FunctionButton({ children, action }) {
   });
 
   useEffect(() => {
-    setCurrentObject({
-      buttonId: resultObject.buttonId,
-      countList: resultObject.countList,
-    });
-  }, [resultObject.countList]);
+    console.log(resultObject);
+  }, [resultObject]);
 
   useEffect(() => {
     if (resultObject.result !== null) {
       setStoreResult((prevState) => [resultObject, ...prevState]);
-      setResultObject((prevState) => {
-        return {
-          buttonId: buttonId,
-          countList: [],
-          result: null,
-        };
+      setResultObject({
+        buttonId: buttonId,
+        countList: [],
+        result: null,
       });
-      // Remove bellow commit to see result of the main data repo
-      // console.log(storeResult.current, "--->", storeResult.current.length);
     }
   }, [resultObject.result]);
 
@@ -43,7 +36,7 @@ export default memo(function FunctionButton({ children, action }) {
         return {
           buttonId: prevState.buttonId,
           countList: prevState.countList,
-          result: action(resultVal),
+          result: resultVal,
         };
       });
 
@@ -53,8 +46,26 @@ export default memo(function FunctionButton({ children, action }) {
 
   useEffect(() => {
     if (count !== 0) {
-      // setStoreResult((prevState) => [resultObject, ...prevState]);
-
+      // setStoreResult((prevState) =>
+      //   prevState.map((object, index) => {
+      //     if (prevState.length === 0) {
+      //       return {
+      //         buttonId: object.buttonId,
+      //         countList: resultObject.countList,
+      //         result: null,
+      //       };
+      //     } else if (index === prevState.length - 1) {
+      //       return {
+      //         buttonId: object.buttonId,
+      //         countList: resultObject.countList,
+      //         result: null,
+      //       };
+      //     } else {
+      //       return object;
+      //     }
+      //   })
+      // );
+      // setStoreResult((prevState) => prevState.map((obj, index) => {}));
       setResultObject((prevState) => {
         return {
           buttonId: prevState.buttonId,
@@ -67,7 +78,6 @@ export default memo(function FunctionButton({ children, action }) {
 
   function handleClick() {
     setCount(count + 1);
-    // console.log("clicked");
   }
 
   return <button onClick={handleClick}>{children}</button>;

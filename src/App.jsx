@@ -9,20 +9,15 @@ export const DataContext = createContext();
 
 export default function App() {
   const [storeResult, setStoreResult] = useState([]);
-  const [currentObject, setCurrentObject] = useState({
-    buttonId: null,
-    countList: [],
-  });
 
-  useEffect(() => {
-    console.log(currentObject.buttonId, "button changed");
-    console.log(storeResult);
-  }, [currentObject.buttonId]);
+  // useEffect(() => {
+  //   console.log(storeResult);
+  // }, [storeResult]);
 
   return (
     <>
       <div className="button-container">
-        <DataContext.Provider value={[setStoreResult, setCurrentObject]}>
+        <DataContext.Provider value={setStoreResult}>
           <FunctionButton action={factorial}>Factorial</FunctionButton>
           <FunctionButton action={fibonacci}>Fibonacci</FunctionButton>
           <FunctionButton action={summation}>Summation</FunctionButton>
@@ -32,7 +27,7 @@ export default function App() {
       </div>
       {
         <div className="display-region">
-          <DataContext.Provider value={[storeResult, currentObject]}>
+          <DataContext.Provider value={storeResult}>
             <DisplayCards></DisplayCards>
           </DataContext.Provider>
         </div>

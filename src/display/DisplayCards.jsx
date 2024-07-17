@@ -4,23 +4,10 @@ import ResultCard from "./ResultCard";
 import { DataContext } from "../App";
 
 export default function DisplayCards() {
-  const [storeResult, currentObject] = useContext(DataContext);
-
-  // useEffect(() => {
-  //   console.log(storeResult);
-  //   console.log(currentObject);
-  // }, [currentObject]);
-
-  // console.log("I rendered", currentObject);
+  const storeResult = useContext(DataContext);
 
   return (
     <>
-      <div>
-        {currentObject.countList.length !== 0 ? (
-          <ResultCard cardVal={currentObject} />
-        ) : null}
-      </div>
-
       <div>
         {storeResult.length !== 0
           ? storeResult.map((obj, index) => (
