@@ -4,10 +4,11 @@ import useDebounce from "../util/useDebounce";
 import { DataContext } from "../App";
 
 export default memo(function FunctionButton({ children, action }) {
-  const setStoreResult = useContext(DataContext);
+  const [setStoreResult, setCurrentObject] = useContext(DataContext);
   const buttonId = useId();
   const [count, setCount] = useState(0);
-  const resultVal = useDebounce(count, 2000);
+  const resultVal = useDebounce(count, 1000);
+
   const [resultObject, setResultObject] = useState({
     buttonId: buttonId,
     countList: [],
@@ -15,12 +16,21 @@ export default memo(function FunctionButton({ children, action }) {
   });
 
   useEffect(() => {
+    setCurrentObject({
+      buttonId: resultObject.buttonId,
+      countList: resultObject.countList,
+    });
+  }, [resultObject.countList]);
+
+  useEffect(() => {
     if (resultObject.result !== null) {
       setStoreResult((prevState) => [resultObject, ...prevState]);
-      setResultObject({
-        buttonId: buttonId,
-        countList: [],
-        result: null,
+      setResultObject((prevState) => {
+        return {
+          buttonId: buttonId,
+          countList: [],
+          result: null,
+        };
       });
       // Remove bellow commit to see result of the main data repo
       // console.log(storeResult.current, "--->", storeResult.current.length);
@@ -43,6 +53,8 @@ export default memo(function FunctionButton({ children, action }) {
 
   useEffect(() => {
     if (count !== 0) {
+      // setStoreResult((prevState) => [resultObject, ...prevState]);
+
       setResultObject((prevState) => {
         return {
           buttonId: prevState.buttonId,

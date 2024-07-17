@@ -9,11 +9,20 @@ export const DataContext = createContext();
 
 export default function App() {
   const [storeResult, setStoreResult] = useState([]);
+  const [currentObject, setCurrentObject] = useState({
+    buttonId: null,
+    countList: [],
+  });
+
+  useEffect(() => {
+    console.log(currentObject.buttonId, "button changed");
+    console.log(storeResult);
+  }, [currentObject.buttonId]);
 
   return (
     <>
       <div className="button-container">
-        <DataContext.Provider value={setStoreResult}>
+        <DataContext.Provider value={[setStoreResult, setCurrentObject]}>
           <FunctionButton action={factorial}>Factorial</FunctionButton>
           <FunctionButton action={fibonacci}>Fibonacci</FunctionButton>
           <FunctionButton action={summation}>Summation</FunctionButton>
@@ -21,13 +30,13 @@ export default function App() {
           <FunctionButton action={randomGen}>Random</FunctionButton>
         </DataContext.Provider>
       </div>
-      {storeResult.length === 0 ? null : (
+      {
         <div className="display-region">
-          <DataContext.Provider value={storeResult}>
+          <DataContext.Provider value={[storeResult, currentObject]}>
             <DisplayCards></DisplayCards>
           </DataContext.Provider>
         </div>
-      )}
+      }
     </>
   );
 }
