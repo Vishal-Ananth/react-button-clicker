@@ -1,13 +1,12 @@
+import { useEffect } from "react";
 import Logs from "./Logs";
 
-export default function LogContainer({ logList }) {
+export default function LogContainer({ countList }) {
   return (
     <div className="log-container">
-      {logList.map((value, index) =>
-        index !== logList.length - 1 ? (
-          <Logs key={index} value={value}></Logs>
-        ) : null
-      )}
+      {countList !== undefined
+        ? countList.map((value, index) => <Logs key={index} value={value} />)
+        : null}
     </div>
   );
 }

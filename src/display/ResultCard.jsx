@@ -2,17 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import LogContainer from "./LogContainer";
 import useDebounce from "../util/useDebounce";
 
-export default function ResultCard({ logList }) {
-  const forcedRender = useDebounce(10000, 0);
+export default function ResultCard({ cardVal }) {
   return (
-    <>
-      {logList.length === 0 ? null : (
-        <div className="result-card">
-          <LogContainer logList={logList}></LogContainer>
-
-          <div className="result">{logList[logList.length - 1]}</div>
-        </div>
-      )}
-    </>
+    <div className="result-card">
+      <LogContainer countList={cardVal.countList}></LogContainer>
+      <div className="result">{cardVal.result}</div>
+    </div>
   );
 }
