@@ -11,7 +11,6 @@ export default memo(function FunctionButton({ children, action }) {
 
   useEffect(() => {
     if (resultVal !== null && count !== 0) {
-      // console.log(buttonId, "resultUpdate");
       setStoreResult((prevState) =>
         prevState.map((resObject, index) => {
           if (index === 0) {

@@ -10,12 +10,6 @@ export const DataContext = createContext();
 export default function App() {
   const [storeResult, setStoreResult] = useState([{}]);
 
-  useEffect(() => {
-    console.log(storeResult);
-    
-  }, [storeResult]);
-
-
   return (
     <>
       <div className="button-container">
@@ -56,5 +50,5 @@ function exponent(count) {
 }
 
 function randomGen(count) {
-  return Math.floor(Math.random() * count);
+  return Math.floor(Math.random() * count) + 1;
 }

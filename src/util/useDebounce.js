@@ -12,5 +12,5 @@ export default function useDebounce(value, delay) {
     };
   });
 
-  return value === null ? null : debouncedValue;
+  return debouncedValue;
 }
