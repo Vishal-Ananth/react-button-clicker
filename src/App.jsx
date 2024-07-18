@@ -8,11 +8,13 @@ import FunctioButton from "./buttons/FunctionButton";
 export const DataContext = createContext();
 
 export default function App() {
-  const [storeResult, setStoreResult] = useState([]);
+  const [storeResult, setStoreResult] = useState([{}]);
 
-  // useEffect(() => {
-  //   console.log(storeResult);
-  // }, [storeResult]);
+  useEffect(() => {
+    console.log(storeResult);
+    
+  }, [storeResult]);
+
 
   return (
     <>
@@ -25,13 +27,12 @@ export default function App() {
           <FunctionButton action={randomGen}>Random</FunctionButton>
         </DataContext.Provider>
       </div>
-      {
-        <div className="display-region">
-          <DataContext.Provider value={storeResult}>
-            <DisplayCards></DisplayCards>
-          </DataContext.Provider>
-        </div>
-      }
+
+      <div className="display-region">
+        <DataContext.Provider value={storeResult}>
+          <DisplayCards></DisplayCards>
+        </DataContext.Provider>
+      </div>
     </>
   );
 }

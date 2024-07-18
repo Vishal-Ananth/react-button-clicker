@@ -10,9 +10,11 @@ export default function DisplayCards() {
     <>
       <div>
         {storeResult.length !== 0
-          ? storeResult.map((obj, index) => (
-              <ResultCard key={index} cardVal={obj} />
-            ))
+          ? storeResult.map((obj, index) =>
+              obj === undefined || Object.keys(obj).length === 0 ? null : (
+                <ResultCard key={index} cardVal={obj} />
+              )
+            )
           : null}
       </div>
     </>

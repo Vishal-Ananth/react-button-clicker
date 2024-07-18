@@ -7,72 +7,51 @@ export default memo(function FunctionButton({ children, action }) {
   const setStoreResult = useContext(DataContext);
   const buttonId = useId();
   const [count, setCount] = useState(0);
-  const resultVal = useDebounce(count, 1000, action);
-
-  const [resultObject, setResultObject] = useState({
-    buttonId: buttonId,
-    countList: [],
-    result: null,
-  });
+  let resultVal = useDebounce(count, 500);
 
   useEffect(() => {
-    console.log(resultObject);
-  }, [resultObject]);
-
-  useEffect(() => {
-    if (resultObject.result !== null) {
-      setStoreResult((prevState) => [resultObject, ...prevState]);
-      setResultObject({
-        buttonId: buttonId,
-        countList: [],
-        result: null,
-      });
-    }
-  }, [resultObject.result]);
-
-  useEffect(() => {
-    if (count !== 0) {
-      setResultObject((prevState) => {
-        return {
-          buttonId: prevState.buttonId,
-          countList: prevState.countList,
-          result: resultVal,
-        };
-      });
+    if (resultVal !== null && count !== 0) {
+      // console.log(buttonId, "resultUpdate");
+      setStoreResult((prevState) =>
+        prevState.map((resObject, index) => {
+          if (index === 0) {
+            return {
+              buttonId: buttonId,
+              countList: resObject.countList,
+              result: action(resultVal),
+            };
+          } else {
+            return resObject;
+          }
+        })
+      );
 
       setCount(0);
+      setStoreResult((prevState) => [{}, ...prevState]);
     }
   }, [resultVal]);
 
   useEffect(() => {
     if (count !== 0) {
-      // setStoreResult((prevState) =>
-      //   prevState.map((object, index) => {
-      //     if (prevState.length === 0) {
-      //       return {
-      //         buttonId: object.buttonId,
-      //         countList: resultObject.countList,
-      //         result: null,
-      //       };
-      //     } else if (index === prevState.length - 1) {
-      //       return {
-      //         buttonId: object.buttonId,
-      //         countList: resultObject.countList,
-      //         result: null,
-      //       };
-      //     } else {
-      //       return object;
-      //     }
-      //   })
-      // );
-      // setStoreResult((prevState) => prevState.map((obj, index) => {}));
-      setResultObject((prevState) => {
-        return {
-          buttonId: prevState.buttonId,
-          countList: [...prevState.countList, count],
-          result: null,
-        };
-      });
+      setStoreResult((prevState) =>
+        prevState.map((resObjects) => {
+          if (Object.keys(resObjects).length === 0) {
+            return {
+              buttonId: buttonId,
+              countList: [count],
+              result: null,
+            };
+          } else if (resObjects.result !== null) {
+            return resObjects;
+          } else {
+            return {
+              buttonId: resObjects.buttonId,
+              countList: [...resObjects.countList, count],
+              result: null,
+            };
+          }
+        })
+      );
     }
   }, [count]);
 
